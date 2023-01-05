@@ -1,13 +1,65 @@
-<% @my_deals.each do |deal|  %>
-    <div class="border">
-    Pokemon: <%= deal.pokemon.name %>
-    Buy Date: <%= deal.buy_date %>
-    Buy Price: <%= number_to_currency(deal.buy_price) %>
-    Current Price: <%= number_to_currency(deal.pokemon.experience*@satoshi_rate) %>
-    <% if (deal.pokemon.experience*@satoshi_rate/deal.buy_price).positive? %>
-      <i class="fa-solid fa-angles-up" style="color: green;"></i><%= number_with_precision((1-(deal.pokemon.experience*@satoshi_rate/deal.buy_price))*100, precision: 2) %>%
-    <% else %>
-      <i class="fa-solid fa-angles-down" style="color: red;"></i><%= number_with_precision((1-(deal.pokemon.experience*@satoshi_rate/deal.buy_price))*100, precision: 2) %>%
-    <% end %>
+<div class="d-flex">
+  <div>
+    <h1 style="text-align:center;">Holdings</h5>
+    <table class="table me-5">
+      <thead>
+        <tr>
+          <th>Pokemon</th>
+          <th>Buy Date</th>
+          <th>Buy Price</th>
+          <th>Current Price</th>
+          <th>Change</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @my_holdings.each do |deal| %>
+          <tr>
+            <td><%= deal.pokemon.name %></td>
+            <td><%= deal.buy_date %></td>
+            <td><%= number_to_currency(deal.buy_price) %></td>
+            <td><%= number_to_currency(deal.pokemon.experience*@satoshi_rate) %></td>
+            <% if (deal.pokemon.experience*@satoshi_rate - deal.buy_price).positive? %>
+              <td><i class="fa-solid fa-angles-up" style="color: green;"></i><%= number_with_precision(((deal.pokemon.experience*@satoshi_rate/deal.buy_price) - 1) * 100, precision: 2) %>%</td>
+            <% else %>
+              <td><i class="fa-solid fa-angles-down" style="color: red;"></i><%= number_with_precision(((deal.pokemon.experience*@satoshi_rate/deal.buy_price) - 1) * 100, precision: 2) %>%</td>
+            <% end %>
+            <td><%= link_to "Sell", new_pokemon_deal_path(deal.pokemon) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
-<% end %>
+  <div>
+    <h1 style="text-align:center;">Sells</h5>
+    <table class="table ms-5">
+      <thead>
+        <tr>
+          <th>Pokemon</th>
+          <th>Buy Price</th>
+          <th>Sell Price</th>
+          <th>Change</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @my_sells.each do |deal| %>
+          <tr>
+            <td><%= deal.pokemon.name %></td>
+            <td><%= number_to_currency(deal.buy_price) %></td>
+            <td><%= number_to_currency(deal.sell_price) %></td>
+            <% if (deal.sell_price - deal.buy_price).positive? %>
+              <td><i class="fa-solid fa-angles-up" style="color: green;"></i><%= number_with_precision(((deal.sell_price/deal.buy_price) - 1) * 100, precision: 2) %>%</td>
+            <% else %>
+              <td><i class="fa-solid fa-angles-down" style="color: red;"></i><%= number_with_precision(((deal.sell_price/deal.buy_price) - 1) * 100, precision: 2) %>%</td>
+            <% end %>
+            <td>
+            <% unless deal.sell_date.present? %>
+              <%= link_to "Sell", new_pokemon_deal_path(deal.pokemon) %>
+            <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

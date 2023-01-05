@@ -8,10 +8,10 @@ class DealsController < ApplicationController
   end
 
   def my_deals
-    @my_deals = Deal.where(user: current_user)
+    @my_sells = Deal.where(user: current_user).where.not(sell_date: nil)
+    @my_holdings = Deal.where(user: current_user).where(sell_date: nil)
     set_satoshi_rate
   end
-
 
   def new
     @pokemon = Pokemon.find(params[:pokemon_id])
