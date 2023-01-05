@@ -1,0 +1,11 @@
+<div class="cards-grid">
+  <% @pokemons.each do |pokemon|%>
+    <div class="card">
+      <img src=<%= pokemon.image_url %> class="card-img">
+      <div class="card-body">
+        <h5 class="card-title"><%= pokemon.name %></h5>
+        <p class="card-text">Price: <%= number_to_currency((pokemon.experience)*@bitcoin_rate*0.00000001) %></p>
+        </div>
+    </div>
+  <% end %>
+</div>

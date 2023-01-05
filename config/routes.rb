@@ -5,4 +5,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+  resources :pokemons do
+    resources :deals, only: %i[new create]
+  end
+
+  resources :deals, only: %i[show edit update]
+  get "my_deals", to: "deals#my_tools"
 end

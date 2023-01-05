@@ -79,3 +79,4 @@ end
 # Installed Gems
 
 gem "devise"
+gem 'httparty'
