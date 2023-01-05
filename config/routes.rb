@@ -10,5 +10,5 @@ Rails.application.routes.draw do
   end
 
   resources :deals, only: %i[show edit update]
-  get "my_deals", to: "deals#my_tools"
+  get "my_deals", to: "deals#my_deals"
 end

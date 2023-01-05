@@ -16,7 +16,7 @@ results.each do |result|
   Pokemon.create!(
     name: result["name"].capitalize,
     image_url: r["sprites"]["front_default"],
-    experience: r["base_experience"].to_f
+    experience: r["base_experience"].to_d
   )
 end
 

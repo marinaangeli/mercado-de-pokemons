@@ -8,7 +8,7 @@ class Pokemon < ApplicationRecord
   # results.each do |result|
   #   url = result["url"]
   #   r = HTTParty.get(url)
-  #   experience = r["base_experience"].to_f
+  #   experience = r["base_experience"].to_d
   #   @pokemons << {
   #     name: result["name"].capitalize,
   #     picture: r["sprites"]["front_default"],
