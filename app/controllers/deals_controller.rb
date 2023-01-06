@@ -18,10 +18,8 @@ class DealsController < ApplicationController
 
   def create
     @deal = Deal.new
-    @deal.pokemon = @pokemon
-    @deal.buy_date = Date.today
-    @deal.buy_price = @pokemon.experience*@satoshi_rate
-    @deal.user = current_user
+    @deal = Deal.new
+    @deal.assign_attributes(pokemon: @pokemon, buy_date: Date.today, buy_price: @pokemon.experience*@satoshi_rate, user: current_user)
     if @deal.save
       redirect_to my_deals_path
     else
@@ -36,20 +34,19 @@ class DealsController < ApplicationController
   def update
     @deal = Deal.find(params[:id])
     @pokemon = @deal.pokemon
-    @deal.sell_date = Date.today
-    @deal.sell_price = @pokemon.experience*@satoshi_rate
-    @deal.save
+    @deal.update(sell_date: Date.today, sell_price: @pokemon.experience*@satoshi_rate)
     redirect_to my_deals_path
   end
 
   private
 
+  # Set the satoshi rate from a third-party API
   def set_satoshi_rate
-    api_key = '181edf265ab80e07441e75e6111435f4347ebf5703a1ca0d8ec4b53efb437e94'
-    response = HTTParty.get("https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=BRL&api_key=#{api_key}")
+    response = HTTParty.get("https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=BRL&api_key=#{ENV.fetch('API_KEY', nil)}")
     @satoshi_rate = response["BRL"].to_d*0.00000001
   end
 
+  # Set the pokemon based on the pokemon_id parameter
   def set_pokemon
     @pokemon = Pokemon.find(params[:pokemon_id])
   end

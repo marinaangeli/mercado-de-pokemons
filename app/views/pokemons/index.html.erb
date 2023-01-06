@@ -4,7 +4,7 @@
       <img src=<%= pokemon.image_url %> class="card-img">
       <div class="card-body">
         <h5 class="card-title"><%= pokemon.name %></h5>
-        <span class="card-text">Price: <%= number_to_currency((pokemon.experience)*@bitcoin_rate*0.00000001) %></span>
+        <span class="card-text">Price: <%= number_to_currency((pokemon.experience)*@satoshi_rate) %></span>
         <%= link_to "Buy!", new_pokemon_deal_path(pokemon) %>
       </div>
     </div>
