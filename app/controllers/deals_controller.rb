@@ -1,7 +1,7 @@
 class DealsController < ApplicationController
   skip_before_action :authenticate_user!, only: :index
   before_action :set_pokemon, only: %i[new create]
-  before_action :set_satoshi_rate, only: %i[new create]
+  before_action :set_satoshi_rate, only: %i[new create my_deals edit update]
 
   def index
 
@@ -10,11 +10,9 @@ class DealsController < ApplicationController
   def my_deals
     @my_sells = Deal.where(user: current_user).where.not(sell_date: nil)
     @my_holdings = Deal.where(user: current_user).where(sell_date: nil)
-    set_satoshi_rate
   end
 
   def new
-    @pokemon = Pokemon.find(params[:pokemon_id])
     @deal = Deal.new
   end
 
@@ -31,12 +29,17 @@ class DealsController < ApplicationController
     end
   end
 
-  def show
-
+  def edit
+    @deal = Deal.find(params[:id])
   end
 
   def update
-
+    @deal = Deal.find(params[:id])
+    @pokemon = @deal.pokemon
+    @deal.sell_date = Date.today
+    @deal.sell_price = @pokemon.experience*@satoshi_rate
+    @deal.save
+    redirect_to my_deals_path
   end
 
   private
@@ -51,4 +54,7 @@ class DealsController < ApplicationController
     @pokemon = Pokemon.find(params[:pokemon_id])
   end
 
+  def deal_params
+    params.require(:deal).permit(:buy_date, :buy_price, :sell_date, :sell_price, :user_id, :pokemon_id)
+  end
 end

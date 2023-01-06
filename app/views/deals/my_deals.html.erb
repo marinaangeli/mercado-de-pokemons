@@ -11,9 +11,14 @@
           <th>Change</th>
           <th>Action</th>
         </tr>
+        <tr>
+          <th colspan="3">Total</th>
+          <th><%= number_to_currency(@my_holdings.sum { |deal| deal.pokemon.experience*@satoshi_rate }) %></th>
+          <th></th>
+          <th></th>
+        </tr>
       </thead>
       <tbody>
-        <% @my_holdings.each do |deal| %>
           <tr>
             <td><%= deal.pokemon.name %></td>
             <td><%= deal.buy_date %></td>
@@ -24,7 +29,7 @@
             <% else %>
               <td><i class="fa-solid fa-angles-down" style="color: red;"></i><%= number_with_precision(((deal.pokemon.experience*@satoshi_rate/deal.buy_price) - 1) * 100, precision: 2) %>%</td>
             <% end %>
-            <td><%= link_to "Sell", new_pokemon_deal_path(deal.pokemon) %></td>
+            <td><%= link_to "Sell", edit_deal_path(deal) %></td>
           </tr>
         <% end %>
       </tbody>
