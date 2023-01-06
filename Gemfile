@@ -80,3 +80,4 @@ end
 
 gem "devise"
 gem 'httparty'
+gem "dotenv-rails", groups: [:development, :test]
