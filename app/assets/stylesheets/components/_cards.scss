@@ -10,6 +10,7 @@
   text-align:center;
   margin-left: auto;
   margin-right: auto;
+  display:block
 }
 
 .card-img {
@@ -27,9 +28,6 @@
   .card {
     margin-bottom: 10px;
   }
-  .recipe-h2{
-    font-size: 14px !important;
-  }
 }
 
 @media(max-width: 768px) {
@@ -38,9 +36,6 @@
   }
   .card {
     margin-bottom: 2px;
-  }
-  .recipe-h2{
-    font-size: 14px !important;
   }
 }
 
@@ -51,7 +46,19 @@
   .card {
     margin-bottom: 2px;
   }
-  .recipe-h2{
-    font-size: 14px !important;
-  }
+}
+
+
+.card-body{
+  position: relative;
+  height: 70%;
+}
+
+.card-content{
+  align-self: bottom;
+}
+
+.card-text{
+  font-size: 12px;
+  margin-bottom: 2px;
 }

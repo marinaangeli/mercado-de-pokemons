@@ -1,15 +1,26 @@
-<%= form_tag pokemons_path, method: :get do %>
+<%= form_tag pokemons_path, method: :get, class: "centralized" do %>
+  <div class="me-4"><h4>Sort Pokemons</h4></div>
+  <div>
   <%= select_tag :sort_by, options_for_select([["Lowest price", "lowest_price"], ["Highest price", "highest_price"], ["Alphabetical order", "alphabetical_order"]]) %>
   <%= submit_tag "Sort" %>
+  </div>
 <% end %>
 <div class="cards-grid">
   <% @pokemons.each do |pokemon|%>
     <div class="card">
       <img src=<%= pokemon.image_url %> class="card-img">
       <div class="card-body">
-        <h5 class="card-title"><%= pokemon.name %></h5>
-        <span class="card-text">Price: <%= number_to_currency((pokemon.experience)*@satoshi_rate) %></span>
-        <%= link_to "Buy!", new_pokemon_deal_path(pokemon) %>
+        <div>
+          <span class="card-title"><%= pokemon.name %></span><br>
+        </div>
+        <div class="d-flex card-content">
+          <div>
+            <span class="card-text position-absolute bottom-0 start-0 ms-3">Price: <%= number_to_currency((pokemon.experience)*@satoshi_rate) %></span>
+          </div>
+          <div>
+            <%= link_to "Buy!", new_pokemon_deal_path(pokemon), class:"card-text position-absolute bottom-0 end-0 me-3" %>
+          </div>
+        </div>
       </div>
     </div>
   <% end %>
