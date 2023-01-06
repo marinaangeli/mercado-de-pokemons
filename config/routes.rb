@@ -11,4 +11,5 @@ Rails.application.routes.draw do
 
   resources :deals, only: %i[show edit update]
   get "my_deals", to: "deals#my_deals"
+  get 'pokemons/sort' => 'pokemons#sort'
 end

@@ -7,7 +7,7 @@
 #   Character.create(name: "Luke", movie: movies.first)
 Pokemon.destroy_all
 
-response = HTTParty.get('https://pokeapi.co/api/v2/pokemon?limit=36')
+response = HTTParty.get('https://pokeapi.co/api/v2/pokemon?limit=1500')
 results = response['results']
 # @pokemons = []
 results.each do |result|
