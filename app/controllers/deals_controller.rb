@@ -15,19 +15,7 @@ class DealsController < ApplicationController
   def new
     @deal = Deal.new
     # Get historical data
-    rates = HTTParty.get("https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=BRL&limit=60&api_key=#{ENV.fetch('API_KEY', nil)}").parsed_response['Data']
-    values = rates.map do |r|
-      {
-        date: Time.at(r['time']).to_date,
-        close: r['close']
-      }
-    end
-    @data = values.map do |h|
-      [
-        h[:date],
-        h[:close] * @pokemon.experience.to_i * 0.00000001
-      ]
-    end
+    set_historical_data
   end
 
   def create
@@ -43,6 +31,8 @@ class DealsController < ApplicationController
 
   def edit
     @deal = Deal.find(params[:id])
+    @pokemon = @deal.pokemon
+    set_historical_data
   end
 
   def update
@@ -53,6 +43,22 @@ class DealsController < ApplicationController
   end
 
   private
+
+  def set_historical_data
+    rates = HTTParty.get("https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=BRL&limit=60&api_key=#{ENV.fetch('API_KEY', nil)}").parsed_response['Data']
+    values = rates.map do |r|
+      {
+        date: Time.at(r['time']).to_date,
+        close: r['close']
+      }
+    end
+    @data = values.map do |h|
+      [
+        h[:date],
+        h[:close] * @pokemon.experience.to_i * 0.00000001
+      ]
+    end
+  end
 
   # Set the satoshi rate from a third-party API
   def set_satoshi_rate

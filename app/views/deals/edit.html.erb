@@ -1,4 +1,23 @@
 <%= provide :title, "Sell Pokemon" %>
-<%= simple_form_for [@deal] do |f| %>
-  <%= f.submit "Sell!", class: "btn btn-primary" %>
-<% end %>
+
+<div class="card-pokemon my-3 justify-content-around">
+  <%= link_to image_tag(@deal.pokemon.image_url, alt: @deal.pokemon.name), @deal.pokemon.image_url %>
+  <div class="card-pokemon-infos">
+    <h2><%=@deal.pokemon.name%></h2>
+    <p>Sell Price: <%= number_to_currency(@data.last[1]) %></p>
+    <p>
+      You
+      <% result = @data.last[1] - @deal.buy_price %>
+      <% outcome = result > 0 ? 'earned' : 'lost' %>
+      <%= outcome %>
+      <%= number_to_currency(result.abs) %>
+    </p>
+  </div>
+  <%= simple_form_for [@deal] do |f| %>
+    <%= f.submit "Sell!", class: "btn btn-primary" %>
+  <% end %>
+</div>
+
+  <div class="container shadow" style="background-color: white">
+    <%= line_chart @data, title: "Price variation", min: number_with_precision(@data.map { |d| d[1] }.min * 0.95, precision: 2), max: number_with_precision(@data.map { |d| d[1] }.max * 1.05, precision:2) %>
+  </div>

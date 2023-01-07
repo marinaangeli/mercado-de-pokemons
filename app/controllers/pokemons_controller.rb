@@ -1,5 +1,5 @@
 class PokemonsController < ApplicationController
-  before_action :set_satoshi_rate, only: :index
+
   def index
     sort_by = params[:sort_by]
     @pokemons = sort_pokemons(sort_by)
@@ -9,7 +9,6 @@ class PokemonsController < ApplicationController
   def show
 
   end
-
 
   def sort
     sort_by = params[:sort_by]

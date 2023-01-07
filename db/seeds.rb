@@ -5,23 +5,29 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
-Pokemon.destroy_all
+# Pokemon.destroy_all
 
-response = HTTParty.get('https://pokeapi.co/api/v2/pokemon?limit=1500')
-results = response['results']
-# @pokemons = []
-results.each do |result|
-  url = result["url"]
-  r = HTTParty.get(url)
-  Pokemon.create!(
-    name: result["name"].capitalize,
-    image_url: r["sprites"]["front_default"],
-    experience: r["base_experience"].to_d
-  )
-end
+# response = HTTParty.get('https://pokeapi.co/api/v2/pokemon?limit=1500')
+# results = response['results']
+# # @pokemons = []
+# results.each do |result|
+#   url = result["url"]
+#   r = HTTParty.get(url)
+#   Pokemon.create!(
+#     name: result["name"].capitalize,
+#     image_url: r["sprites"]["front_default"],
+#     experience: r["base_experience"].to_d
+#   )
+# end
 
-@pokemons = Pokemon.all
+user = User.last
+pokemon = Pokemon.last
 
-@pokemons.each do |pokemon|
-  puts "#{pokemon.name} - #{pokemon.image_url} - #{pokemon.experience}"
-end
+Deal.create!(
+  buy_date: Date.yesterday,
+  buy_price: rand(0.1 .. 0.3),
+  sell_date: Date.today,
+  sell_price: rand(0.1 .. 0.3),
+  user: user,
+  pokemon: pokemon
+)
