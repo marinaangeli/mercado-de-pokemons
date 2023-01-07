@@ -1,4 +1,15 @@
-<h1>New deal</h1>
+<%= provide :title, "Buy Pokemon" %>
+<div class="card-pokemon my-3 justify-content-around">
+  <img src=<%= @pokemon.image_url %>>
+  <div class="card-pokemon-infos">
+    <h2><%=@pokemon.name%></h2>
+    <p>Price: <%= number_to_currency(@data.last[1]) %></p>
+  </div>
   <%= simple_form_for [@pokemon, @deal] do |f| %>
     <%= f.submit "Buy!", class: "btn btn-primary" %>
   <% end %>
+</div>
+
+  <div class="container shadow" style="background-color: white">
+    <%= line_chart @data, min: number_with_precision(@data.map { |d| d[1] }.min * 0.95, precision: 2), max: number_with_precision(@data.map { |d| d[1] }.max * 1.05, precision:2) %>
+  </div>

@@ -10,6 +10,7 @@ class PokemonsController < ApplicationController
 
   end
 
+
   def sort
     sort_by = params[:sort_by]
     @pokemons = sort_pokemons(sort_by)

@@ -1,7 +1,27 @@
 .table{
-width: 100%;
+  width: 100%;
+
 }
 
 .teste{
   color: orange;
+}
+
+.box{
+  background-color: white;
+  height: fit-content;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.deals-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr ;
+  grid-gap: 25px;
+}
+
+
+@media(max-width: 1400px) {
+  .deals-grid {
+    grid-template-columns: 1fr;
+  }
 }
