@@ -13,7 +13,8 @@
           <th>Action</th>
         </tr>
         <tr>
-          <th colspan="3">Total</th>
+          <th colspan="2">Total</th>
+          <th><%= number_to_currency(@my_holdings.sum { |deal| deal.buy_price }) %></th>
           <th><%= number_to_currency(@my_holdings.sum { |deal| deal.pokemon.experience*@satoshi_rate }) %></th>
           <th></th>
           <th></th>
