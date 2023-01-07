@@ -5,30 +5,29 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
-# Pokemon.destroy_all
+Pokemon.destroy_all
 Deal.destroy_all
+User.destroy_all
 
-# response = HTTParty.get('https://pokeapi.co/api/v2/pokemon?limit=1500')
-# results = response['results']
-# # @pokemons = []
-# results.each do |result|
-#   url = result["url"]
-#   r = HTTParty.get(url)
-#   Pokemon.create!(
-#     name: result["name"].capitalize,
-#     image_url: r["sprites"]["front_default"],
-#     experience: r["base_experience"].to_d
-#   )
-# end
+response = HTTParty.get('https://pokeapi.co/api/v2/pokemon?limit=1500')
+results = response['results']
+results.each do |result|
+  url = result["url"]
+  r = HTTParty.get(url)
+  Pokemon.create!(
+    name: result["name"].capitalize,
+    image_url: r["sprites"]["front_default"],
+    experience: r["base_experience"].to_d
+  )
+end
+pokemon = Pokemon.all.sample
 
-# Date.today.downto(Date.today.since(-60)) do |date|
-#   dates << date.to_s
-# end
+user = User.create!(
+  email: "teste@teste",
+  password: "aaaaaa"
+)
 
 10.times do
-  user = User.last
-  pokemon = Pokemon.all.sample
-
   buy_date = Date.today - rand(0..60)
   date_range = (Date.today - buy_date).to_i
   days = rand(0..date_range)
@@ -45,9 +44,6 @@ Deal.destroy_all
 end
 
 15.times do
-  user = User.last
-  pokemon = Pokemon.all.sample
-
   buy_date = Date.today - rand(0..60)
 
   Deal.create!(
