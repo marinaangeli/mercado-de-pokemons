@@ -28,6 +28,7 @@ user = User.create!(
 )
 
 10.times do
+  pokemon = Pokemon.all.sample
   buy_date = Date.today - rand(0..60)
   date_range = (Date.today - buy_date).to_i
   days = rand(0..date_range)
@@ -44,6 +45,7 @@ user = User.create!(
 end
 
 15.times do
+  pokemon = Pokemon.all.sample
   buy_date = Date.today - rand(0..60)
 
   Deal.create!(
