@@ -20,7 +20,7 @@ results.each do |result|
     experience: r["base_experience"].to_d
   )
 end
-pokemon = Pokemon.all.sample
+
 
 user = User.create!(
   email: "teste@teste",
